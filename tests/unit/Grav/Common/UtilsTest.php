@@ -131,8 +131,8 @@ class UtilsTest extends \Codeception\TestCase\Test
 
         $objMerged = Utils::mergeObjects($obj1, $obj2);
 
-        self::assertObjectHasAttribute('test1', $objMerged);
-        self::assertObjectHasAttribute('test2', $objMerged);
+        self::arrayHasKey('test1', (array) $objMerged);
+        self::arrayHasKey('test2', (array) $objMerged);
     }
 
     public function testDateFormats(): void
@@ -561,6 +561,7 @@ class UtilsTest extends \Codeception\TestCase\Test
         $config->set('security.uploads_dangerous_extensions', ['php', 'html', 'htm', 'exe', 'js']);
 
         self::assertFalse(Utils::checkFilename('foo.php'));
+        self::assertFalse(Utils::checkFilename('foo.PHP'));
         self::assertFalse(Utils::checkFilename('bar.js'));
 
         self::assertTrue(Utils::checkFilename('foo.json'));
